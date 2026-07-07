@@ -1,0 +1,236 @@
+### Register User
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+    "name": "Kavana M ",
+    "email": "kavana@example.com",
+    "password": "123456"
+       
+}
+### Login User
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "kavana@example.com",
+    "password": "123456"
+}
+### Add Menu Item
+POST http://localhost:5000/api/menu
+Content-Type: application/json
+
+{
+    "restaurant_id": 1,
+    "name": "Paneer Pizza",
+    "price": 299,
+    "is_available": true
+}
+
+### Get All Menu Items
+GET http://localhost:5000/api/menu
+
+### Update Menu Item
+PUT http://localhost:5000/api/menu/1
+Content-Type: application/json
+
+{
+    "restaurant_id": 1,
+    "name": "Veg Supreme Pizza",
+    "price": 349,
+    "is_available": true
+}
+### Delete Menu Item
+DELETE http://localhost:5000/api/menu/1
+
+### Add Restaurant Table
+ 
+### Add Table
+POST http://localhost:5000/api/tables
+Content-Type: application/json
+
+{
+    "restaurant_id":1,
+    "table_number":1,
+    "capacity":4,
+    "status":"available"
+}
+
+###
+
+GET http://localhost:5000/api/tables
+
+###
+
+GET http://localhost:5000/api/tables/1
+
+###
+
+PUT http://localhost:5000/api/tables/1
+Content-Type: application/json
+
+{
+    "restaurant_id":1,
+    "table_number":1,
+    "capacity":6,
+    "status":"reserved"
+}
+
+###
+
+DELETE http://localhost:5000/api/tables/1
+
+
+
+# bookings
+### Create Booking
+POST http://localhost:5000/api/bookings
+Content-Type: application/json
+
+{
+    "user_id":1,
+    "restaurant_id":1,
+    "booking_date":"2026-07-10",
+    "booking_time":"19:00:00",
+    "guests":5
+}
+
+###
+
+GET http://localhost:5000/api/bookings
+
+###
+
+GET http://localhost:5000/api/bookings/user/1
+
+###
+
+PUT http://localhost:5000/api/bookings/1/cancel
+
+###
+
+PUT http://localhost:5000/api/bookings/1/status
+Content-Type: application/json
+
+{
+    "status":"confirmed"
+}
+###
+
+POST http://localhost:5000/api/orders
+Content-Type: application/json
+
+{
+    "user_id":1,
+    "restaurant_id":1,
+    "total_amount":550,
+
+    "items":[
+
+        {
+            "menu_item_id":2,
+            "quantity":2,
+            "price":150
+        },
+
+        {
+            "menu_item_id":2,
+            "quantity":1,
+            "price":250
+        }
+
+    ]
+}
+###
+GET http://localhost:5000/api/orders
+###
+GET http://localhost:5000/api/orders/user/1
+###
+GET http://localhost:5000/api/orders/1/items
+###
+PUT http://localhost:5000/api/orders/1/status
+Content-Type: application/json
+
+{
+    "status":"preparing"
+}
+###
+DELETE http://localhost:5000/api/orders/1
+
+
+###payment
+POST http://localhost:5000/api/payments
+Content-Type: application/json
+
+{
+    "order_id":2,
+    "booking_id":null,
+    "amount":598,
+    "payment_method":"upi"
+}
+###
+GET http://localhost:5000/api/payments
+
+###
+GET http://localhost:5000/api/payments/2
+
+###
+PUT http://localhost:5000/api/payments/2
+Content-Type: application/json
+
+{
+    "payment_status":"failed"
+}
+
+###
+DELETE http://localhost:5000/api/payments/1
+
+### dashboard
+GET http://localhost:5000/api/dashboard/
+### Dashboard Stats
+GET http://localhost:5000/api/dashboard/stats
+
+###
+
+### Recent Orders
+GET http://localhost:5000/api/dashboard/recent-orders
+
+###
+
+### Recent Bookings
+GET http://localhost:5000/api/dashboard/recent-bookings
+
+###
+
+### Top Selling Items
+GET http://localhost:5000/api/dashboard/top-items
+
+###
+
+### Least Ordered Items
+GET http://localhost:5000/api/dashboard/least-items
+
+###
+
+### Monthly Revenue
+GET http://localhost:5000/api/dashboard/revenue
+
+###
+
+### Payment Summary
+GET http://localhost:5000/api/dashboard/payments
+
+###
+
+### Table Summary
+GET http://localhost:5000/api/dashboard/tables
+
+###
+
+### Booking Summary
+GET http://localhost:5000/api/dashboard/bookings
+
+###
+
+### Daily Revenue
+GET http://localhost:5000/api/dashboard/daily-revenue
