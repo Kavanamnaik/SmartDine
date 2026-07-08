@@ -2,13 +2,20 @@ import "./Restaurant.css";
 import { useParams } from "react-router-dom";
 import { FaStar, FaMapMarkerAlt, FaClock } from "react-icons/fa";
 import restaurants from "../../data/restaurant";
-
+import reviews from "../../data/reviews";
+import BookingWidget from "../../components/BookingWidget/BookingWidget";
+import RelatedRestaurants from "../../components/RelatedRestaurants/RelatedRestaurants";
 function Restaurant() {
-  const { id } = useParams();
+ const { id } = useParams();
 
-  const restaurant = restaurants.find(
-    (item) => item.id === Number(id)
-  );
+console.log("ID:", id);
+
+const restaurant = restaurants.find(
+  (item) => item.id === Number(id)
+);
+const restaurantReviews = reviews[id] || [];
+console.log("Reviews:", restaurantReviews);
+console.log("Restaurant:", restaurant);
 
   if (!restaurant) {
     return <h2>Restaurant Not Found</h2>;
@@ -50,11 +57,18 @@ function Restaurant() {
         </div>
 
       </div>
+      <div className="restaurant-content">
+
+        <h2>About Restaurant</h2>
+
+        <p>{restaurant.description}</p>
+
+      </div>
       <h2 className="section-title">Gallery</h2>
 
 <div className="gallery">
 
-  {restaurant.gallery.map((image, index) => (
+  {restaurant.gallery?.map((image, index) => (
     <img
       key={index}
       src={image}
@@ -63,14 +77,63 @@ function Restaurant() {
   ))}
 
 </div>
+<h2 className="section-title">Popular Dishes</h2>
 
-      <div className="restaurant-content">
+<div className="dish-grid">
+ {restaurant.dishes?.map((dish, index) => (
+    <div className="dish-card" key={index}>
+      <img src={dish.image} alt={dish.name} />
 
-        <h2>About Restaurant</h2>
+      <div className="dish-info">
+        <h3>{dish.name}</h3>
 
-        <p>{restaurant.description}</p>
+        <p>⭐ {dish.rating}</p>
+
+        <span>{dish.price}</span>
+
+        <button>Add</button>
+      </div>
+    </div>
+  ))}
+</div>
+<h2 className="section-title">Customer Reviews</h2>
+
+<div className="reviews">
+
+  {restaurantReviews.map((review, index) => (
+
+    <div className="review-card" key={index}>
+
+      <div className="review-header">
+
+        <div className="avatar">
+          {review.name.charAt(0)}
+        </div>
+
+        <div>
+
+          <h4>{review.name}</h4>
+
+          <span>{review.date}</span>
+
+        </div>
 
       </div>
+
+      <p className="stars">
+        {"⭐".repeat(review.rating)}
+      </p>
+
+      <p>{review.comment}</p>
+
+    </div>
+
+  ))}
+
+</div>
+<BookingWidget restaurant={restaurant} />
+<RelatedRestaurants currentId={restaurant.id} />
+      
 
     </section>
   );
